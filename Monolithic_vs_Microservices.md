@@ -21,3 +21,5 @@ An e-commerce application where user login, product catalog, and payment service
 An e-commerce application where login, product service, and payment service run as separate services.
 
 > Kubernetes works best with Microservices because it can manage, scale, and heal services independently!!!.
+<img width="1400" height="788" alt="image" src="https://github.com/user-attachments/assets/e1488662-aac8-41a2-aab4-761d933d6ab3" />
+
