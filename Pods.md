@@ -1,0 +1,145 @@
+## 📦 Kubernetes Pods
+
+A **Pod** is the **smallest and most basic deployable unit** in Kubernetes.
+
+A Pod represents **one or more containers** that:
+- Run together
+- Share the same network
+- Share the same storage
+- Are scheduled on the same node
+
+---
+
+## 🧠 What is a Pod?
+
+- A Pod can contain:
+  - One container (most common)
+  - Multiple containers (sidecar pattern)
+- Containers inside a Pod:
+  - Share the same IP address
+  - Communicate via `localhost`
+- Pods are **ephemeral** (temporary)
+  - If a Pod dies, Kubernetes creates a **new Pod**, not the same one
+
+---
+
+## 🧩 Pod Diagram Explanation
+
+<!-- Visual reference for understanding -->
+
+
+**Explanation:**
+- A Pod acts as a **wrapper** around containers
+- Kubernetes schedules Pods, not individual containers
+- All containers in a Pod live and die together
+
+---
+
+## ⚙️ How Pods Work (Flow)
+
+1. User creates a Pod (YAML or kubectl)
+2. Request goes to the API Server
+3. Scheduler assigns the Pod to a worker node
+4. Kubelet pulls container images
+5. Container runtime starts containers
+6. Pod gets an IP address
+7. Pod becomes `Running`
+
+---
+
+## 🖥️ Where Pods Run
+
+- Pods always run on **Worker Nodes**
+- Control Plane never runs application Pods
+- One node can run **multiple Pods**
+
+---
+
+## 🛠️ How to Create a Pod
+
+### Create Pod using kubectl (Quick Way)
+
+```bash
+kubectl run nginx-pod --image=nginx
+```
+
+Verify:
+```bash
+kubectl get pods
+```
+
+Create Pod using YAML (Recommended)
+```bash
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-pod
+  labels:
+    app: web
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    ports:
+    - containerPort: 80
+```
+
+Apply:
+```bash
+kubectl apply -f pod.yaml
+```
+
+## 🔍 Pod Lifecycle
+
+- **Pending**  
+  Pod has been accepted by Kubernetes but is not yet running  
+  (image pulling or scheduling in progress)
+
+- **Running**  
+  Pod is scheduled on a node and all containers are running
+
+- **Succeeded**  
+  All containers in the Pod have completed successfully
+
+- **Failed**  
+  One or more containers in the Pod terminated with an error
+
+- **CrashLoopBackOff**  
+  Container starts, crashes, and Kubernetes keeps restarting it
+
+---
+
+## Check Pod Status
+
+```bash
+kubectl get pods
+```
+
+## Get detailed Pod information:
+```bash
+kubectl describe pod <pod-name>
+```
+## View Pod logs:
+```bash
+kubectl logs <pod-name>
+```
+
+## Access Pod container shell:
+```bash
+kubectl exec -it <pod-name> -- /bin/bash
+```
+
+## Delete a Pod:
+```bash
+kubectl delete pod <pod-name>
+```
+
+---
+## 📌 Pods vs Containers (Quick Difference)
+
+Container → Runs the application
+
+Pod → Manages and groups containers
+
+Kubernetes manages Pods, not containers directly
+
